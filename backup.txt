@@ -1,0 +1,126 @@
+from flask import Flask, render_template, request
+import openai
+
+app = Flask(__name__)
+
+# Set your OpenAI API key
+openai.api_key = 'openai'
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route('/generate', methods=['POST'])
+def generate():
+    # Collect user inputs from the form
+    user_info = {
+        'age': request.form.get('age'),
+        'fitness_goal': request.form.get('fitness_goal'),
+        'fitness_level': request.form.get('fitness_level'),
+        'equipment': request.form.get('equipment'),
+        'days_per_week': request.form.get('days_per_week'),
+        # Add more fields based on your 20 questions
+        'question_1': request.form.get('question_1'),
+        'question_2': request.form.get('question_2'),
+        # ...
+    }
+
+    # Generate the workout plan
+    workout_plan = generate_workout_plan(user_info)
+
+    return render_template('result.html', workout_plan=workout_plan)
+
+def generate_workout_plan(user_info):
+    # Convert user_info dict to a formatted string for the API prompt
+    user_info_str = '\n'.join([f"{key.replace('_', ' ').title()}: {value}" for key, value in user_info.items()])
+    
+    # Create a message for the GPT model
+    messages = [
+        {"role": "system", "content": "You are a fitness expert who creates personalized workout plans."},
+        {"role": "user", "content": f"Generate a 30-day workout plan based on the following user information:\n{user_info_str}"}
+    ]
+    
+    # Call OpenAI API to generate a workout plan
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",  # Use the model suitable for your project
+        messages=messages,
+        max_tokens=300  # Adjust this according to your needs
+    )
+    
+    # Extract and return the generated workout plan
+    workout_plan = response['choices'][0]['message']['content'].strip()
+    return workout_plan
+
+if __name__ == '__main__':
+    app.run(debug=True)
+--------------------------------------------------------------------------------------
+
+backup 2
+
+
+
+from flask import Flask, render_template, request
+import google.generativeai as genai
+
+app = Flask(__name__)
+
+# Set your Gemini API key
+genai.configure(api_key='genai_api_key')
+
+# Initialize the Gemini model
+model = genai.GenerativeModel('gemini-pro')
+
+@app.route('/')
+def home():
+    return render_template('registration.html')
+
+@app.route('/generate', methods=['POST'])
+def generate():
+    # Collect user inputs from the form
+    user_info = {
+        'age': request.form.get('age'),
+        'weight_in_kg': request.form.get('weight_in_kg'),
+        'height_in_cm': request.form.get('height_in_cm'),
+        'fitness_goal': request.form.get('fitness_goal'),
+        'fitness_level': request.form.get('fitness_level'),
+        'Cholesterol_level': request.form.get('Cholesterol_level'),
+        'Pressure_level': request.form.get('Pressure_lev,el'),
+        'Sugar_level': request.form.get('Sugar_level'),
+        'equipment': request.form.get('equipment'),
+        'days_per_week': request.form.get('days_per_week'),
+        'Sleeping_Hours_per_day': request.form.get('Sleeping_Hours_per_day'),
+        # Add more fields based on your 20 questions
+        'question_1': request.form.get('question_1'),
+        'question_2': request.form.get('question_2'),
+        'diet_type': request.form.get('diet_type'),
+        'allergies': request.form.get('allergies'),
+        'meals_per_day': request.form.get('meals_per_day'),
+        # ...
+    }
+    
+    # Generate the workout plan
+    workout_plan = generate_workout_plan(user_info)
+    
+    return render_template('result.html', workout_plan=workout_plan)
+
+def generate_workout_plan(user_info):
+    # Convert user_info dict to a formatted string for the API prompt
+    user_info_str = '\n'.join([f"{key.replace('_', ' ').title()}: {value}" for key, value in user_info.items()])
+    
+    # Create a prompt for the Gemini model
+    prompt = f"""As a fitness expert, create a personalized 30-day workout plan and meal plan based on the following user information:
+
+{user_info_str}
+
+Please provide a detailed plan that includes exercises, sets, reps, and rest periods for each day."""
+
+    # Call Gemini API to generate a workout plan
+    response = model.generate_content(prompt)
+    
+    # Extract and return the generated workout plan
+    workout_plan = response.text
+    return workout_plan
+
+if __name__ == '__main__':
+    app.run(debug=True)
+

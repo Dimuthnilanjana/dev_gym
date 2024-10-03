@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generate Plan</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="/css/main.css">
+  <script src="/js/main.js"></script>
+</head>
+<body>
+
+  <div class="container mt-5">
+    <h2 class="text-center">Generate Your Personalized Fitness Plan</h2>
+    <form method="POST" action="{{ url_for('generate') }}">
+      
+
+      <!-- Age -->
+      <div class="mb-3">
+        <label for="age" class="form-label">Age</label>
+        <input type="number" class="form-control" id="age" name="age" required>
+      </div>
+
+      <!-- Sex -->
+      <div class="mb-3">
+        <label for="sex" class="form-label">Male/Female</label>
+        <select class="form-select" id="sex" name="sex" required>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+      
+      <!-- Weight -->
+      <div class="mb-3">
+        <label for="weight_in_kg" class="form-label">Weight (kg)</label>
+        <input type="number" class="form-control" id="weight_in_kg" name="weight_in_kg" required>
+      </div>
+      
+      <!-- Height -->
+      <div class="mb-3">
+        <label for="height_in_cm" class="form-label">Height (cm)</label>
+        <input type="number" class="form-control" id="height_in_cm" name="height_in_cm" required>
+      </div>
+      
+      <!-- Fitness Goal -->
+      <div class="mb-3">
+        <label for="fitness_goal" class="form-label">Fitness Goal</label>
+        <input type="text" class="form-control" id="fitness_goal" name="fitness_goal" required>
+      </div>
+      
+      <!-- Fitness Level -->
+      <div class="mb-3">
+        <label for="fitness_level" class="form-label">Fitness Level</label>
+        <select class="form-select" id="fitness_level" name="fitness_level" required>
+          <option value="beginner">Beginner</option>
+          <option value="intermediate">Intermediate</option>
+          <option value="advanced">Advanced</option>
+        </select>
+      </div>
+      
+      <!-- Cholesterol Level -->
+      <div class="mb-3">
+        <label for="cholesterol_level" class="form-label">Cholesterol Level</label>
+        <input type="text" class="form-control" id="cholesterol_level" name="Cholesterol_level" required>
+      </div>
+      
+      <!-- Blood Pressure Level -->
+      <div class="mb-3">
+        <label for="pressure_level" class="form-label">Blood Pressure Level</label>
+        <input type="text" class="form-control" id="pressure_level" name="Pressure_level" required>
+      </div>
+      
+      <!-- Blood Sugar Level -->
+      <div class="mb-3">
+        <label for="sugar_level" class="form-label">Blood Sugar Level</label>
+        <input type="text" class="form-control" id="sugar_level" name="Sugar_level" required>
+      </div>
+      
+      <!-- Equipment Available -->
+      <div class="mb-3">
+        <label for="equipment" class="form-label">Available Equipment</label>
+        <input type="text" class="form-control" id="equipment" name="equipment" placeholder="E.g., Dumbbells, Resistance Bands" required>
+      </div>
+      
+      <!-- Workout Days per Week -->
+      <div class="mb-3">
+        <label for="days_per_week" class="form-label">Workout Days per Week</label>
+        <input type="number" class="form-control" id="days_per_week" name="days_per_week" required>
+      </div>
+      
+      <!-- Sleeping Hours per Day -->
+      <div class="mb-3">
+        <label for="sleeping_hours_per_day" class="form-label">Sleeping Hours per Day</label>
+        <input type="number" class="form-control" id="sleeping_hours_per_day" name="Sleeping_Hours_per_day" required>
+      </div>
+      
+      <!-- Diet Type -->
+      <div class="mb-3">
+        <label for="diet_type" class="form-label">Diet Type</label>
+        <input type="text" class="form-control" id="diet_type" name="diet_type" placeholder="E.g., Vegetarian, Keto, Balanced" required>
+      </div>
+      
+      <!-- Allergies -->
+      <div class="mb-3">
+        <label for="allergies" class="form-label">Allergies</label>
+        <input type="text" class="form-control" id="allergies" name="allergies" placeholder="E.g., Dairy, Nuts" required>
+      </div>
+      
+      <!-- Meals per Day -->
+      <div class="mb-3">
+        <label for="meals_per_day" class="form-label">Meals per Day</label>
+        <input type="number" class="form-control" id="meals_per_day" name="meals_per_day" required>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary w-100">Generate Plan</button>
+      
+    </form>
+  </div>
+
+</body>
+</html>
